@@ -1,1 +1,43 @@
+import numpy as np
 
+# List kosong
+data = []
+
+# Input jumlah barang
+n = int(input("Masukkan jumlah barang: "))
+
+# Input data
+for i in range(n):
+    print(f"\nData barang ke-{i+1}")
+    nama = input("Nama Barang: ")
+    kode = input("Kode Barang: ")
+    jumlah = int(input("Jumlah: "))
+    harga = float(input("Harga per unit: "))
+    
+    data.append((nama, kode, jumlah, harga))
+
+# Konversi ke NumPy array
+dtype = [('nama', 'U50'), ('kode', 'U20'), ('jumlah', int), ('harga', float)]
+arr = np.array(data, dtype=dtype)
+
+# Tampilkan semua data
+print("\n=== DATA INVENTARIS ===")
+for brg in arr:
+    print(f"Nama: {brg['nama']}, Kode: {brg['kode']}, Jumlah: {brg['jumlah']}, Harga: {brg['harga']}")
+
+# Hitung total nilai inventaris
+total = np.sum(arr['jumlah'] * arr['harga'])
+print("\nTotal Nilai Inventaris:", total)
+
+# Pencarian data
+cari = input("\nMasukkan Nama atau Kode Barang yang dicari: ").lower()
+
+hasil = [brg for brg in arr if cari in brg['nama'].lower() or cari in brg['kode'].lower()]
+
+print("\n=== HASIL PENCARIAN ===")
+if hasil:
+    for brg in hasil:
+        total_barang = brg['jumlah'] * brg['harga']
+        print(f"Nama: {brg['nama']}, Kode: {brg['kode']}, Jumlah: {brg['jumlah']}, Harga: {brg['harga']}, Total: {total_barang}")
+else:
+    print("Data tidak ditemukan.")
