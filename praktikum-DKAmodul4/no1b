@@ -1,1 +1,26 @@
+import networkx as nx
+import matplotlib.pyplot as plt
 
+# Buat graf
+G = nx.Graph()
+
+# Tambah edge
+G.add_edges_from([
+    ("Jakarta", "Bandung"),
+    ("Bandung", "Cirebon"),
+    ("Jakarta", "Cirebon"),
+])
+
+# Atur posisi manual (biar mirip gambar asli)
+pos = {
+    "Jakarta": (0, 1),
+    "Bandung": (1, 0),
+    "Cirebon": (2, 1),
+}
+
+# Gambar graf
+plt.figure()
+nx.draw(G, pos, with_labels=True, node_size=3000, font_size=10)
+
+plt.title("Graf Antar Kota")
+plt.show()
