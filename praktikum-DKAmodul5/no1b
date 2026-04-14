@@ -1,1 +1,47 @@
+import networkx as nx
+import matplotlib.pyplot as plt
 
+# Buat graf Jawa
+G = nx.Graph()
+
+edges = [
+    ("Jakarta", "Cirebon", 327),
+    ("Jakarta", "Bandung", 270),
+    ("Bandung", "Cirebon", 120),
+    ("Bandung", "Yogyakarta", 373),
+    ("Cirebon", "Semarang", 305),
+    ("Cirebon", "Yogyakarta", 210),
+    ("Semarang", "Surabaya", 369),
+    ("Semarang", "Yogyakarta", 109),
+    ("Yogyakarta", "Surakarta", 60),
+    ("Surakarta", "Surabaya", 370),
+    ("Surakarta", "Malang", 94),
+    ("Surabaya", "Malang", 94)
+]
+
+G.add_weighted_edges_from(edges)
+
+# BFS dari Bandung
+bfs = list(nx.bfs_tree(G, source="Bandung"))
+print("BFS Jawa:", bfs)
+
+# Posisi manual biar mirip peta
+pos = {
+    "Jakarta": (0, 2),
+    "Bandung": (1, 1),
+    "Cirebon": (2, 2),
+    "Yogyakarta": (3, 1),
+    "Semarang": (3, 2),
+    "Surakarta": (4, 1),
+    "Surabaya": (5, 2),
+    "Malang": (5, 1),
+}
+
+# Gambar graf
+plt.figure()
+nx.draw(G, pos, with_labels=True, node_size=2000)
+labels = nx.get_edge_attributes(G, 'weight')
+nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+
+plt.title("Graf Pulau Jawa + BFS dari Bandung")
+plt.show()
